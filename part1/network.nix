@@ -1,4 +1,15 @@
 {
+  network = {
+    pkgs = import
+      (builtins.fetchGit {
+        name = "nixos-20.09-small-2020-12-26";
+        url = "https://github.com/nixos/nixpkgs";
+        ref = "refs/heads/nixos-20.09-small";
+        rev = "ae1b121d9a68518dbf46124397e34e465d3cdf6c";
+      })
+      { };
+  };
+
   nixie = { modulesPath, lib, name, ... }: {
     imports = lib.optional (builtins.pathExists ./do-userdata.nix) ./do-userdata.nix ++ [
       (modulesPath + "/virtualisation/digital-ocean-config.nix")
