@@ -20,6 +20,8 @@
 
     networking.hostName = name;
 
+    system.stateVersion = "20.09"; # Do not change lightly!
+
     deployment.healthChecks = {
       http = [
         {
