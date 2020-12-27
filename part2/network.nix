@@ -32,8 +32,19 @@ let
     deployment.targetUser = "root";
     networking.hostName = resource.values.name;
     system.stateVersion = "20.09";
-  };
 
+    networking.firewall.allowedTCPPorts = [ 80 ];
+    services.nginx = {
+      enable = true;
+      upstreams.backend.servers = builtins.listToAttrs
+        (map (r: { name = r.values.ipv4_address_private; value = { }; })
+          backends);
+      virtualHosts.default = {
+        default = true;
+        locations."/".proxyPass = "http://backend";
+      };
+    };
+  };
 in
 {
   network = {
