@@ -13,6 +13,15 @@ let
     deployment.targetUser = "root";
     networking.hostName = resource.values.name;
     system.stateVersion = "20.09";
+
+    networking.firewall.allowedTCPPorts = [ 80 ];
+    services.nginx = {
+      enable = true;
+      virtualHosts.default = {
+        default = true;
+        locations."/".return = "200 \"Hello from ${name} at ${resource.values.ipv4_address}\"";
+      };
+    };
   };
 
   mkLoadBalancer = resource: { modulesPath, lib, name, ... }: {
