@@ -14,7 +14,7 @@ let
     networking.hostName = resource.values.name;
     system.stateVersion = "20.09";
 
-    networking.firewall.allowedTCPPorts = [ 80 ];
+    networking.firewall.interfaces.ens4.allowedTCPPorts = [ 80 ];
     services.nginx = {
       enable = true;
       virtualHosts.default = {
