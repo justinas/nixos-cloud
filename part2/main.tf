@@ -7,7 +7,7 @@ resource "digitalocean_droplet" "backend" {
   image    = 75674995
   ssh_keys = [27010799]
 
-  count = 2
+  count = 3
 }
 
 resource "digitalocean_droplet" "loadbalancer" {
