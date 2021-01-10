@@ -5,14 +5,11 @@ let
   backends = builtins.filter (d: d.name == "backend") droplets;
   loadbalancers = builtins.filter (d: d.name == "loadbalancer") droplets;
 
-  mkBackend = resource: { modulesPath, lib, name, ... }: {
-    imports = lib.optional (builtins.pathExists ./do-userdata.nix) ./do-userdata.nix ++ [
-      (modulesPath + "/virtualisation/digital-ocean-config.nix")
-    ];
+  mkBackend = resource: { name, ... }: {
+    imports = [ ./common.nix ];
+
     deployment.targetHost = resource.values.ipv4_address;
-    deployment.targetUser = "root";
     networking.hostName = resource.values.name;
-    system.stateVersion = "20.09";
 
     networking.firewall.interfaces.ens4.allowedTCPPorts = [ 80 ];
     services.nginx = {
@@ -24,14 +21,11 @@ let
     };
   };
 
-  mkLoadBalancer = resource: { modulesPath, lib, name, ... }: {
-    imports = lib.optional (builtins.pathExists ./do-userdata.nix) ./do-userdata.nix ++ [
-      (modulesPath + "/virtualisation/digital-ocean-config.nix")
-    ];
+  mkLoadBalancer = resource: { name, ... }: {
+    imports = [ ./common.nix ];
+
     deployment.targetHost = resource.values.ipv4_address;
-    deployment.targetUser = "root";
     networking.hostName = resource.values.name;
-    system.stateVersion = "20.09";
 
     networking.firewall.allowedTCPPorts = [ 80 ];
     services.nginx = {
