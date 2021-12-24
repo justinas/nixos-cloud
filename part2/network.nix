@@ -44,10 +44,10 @@ in
   network = {
     pkgs = import
       (builtins.fetchGit {
-        name = "nixos-20.09-small-2020-12-26";
-        url = "https://github.com/nixos/nixpkgs";
-        ref = "refs/heads/nixos-20.09-small";
-        rev = "ae1b121d9a68518dbf46124397e34e465d3cdf6c";
+        name = "nixos-21.11-2021-12-19";
+        url = "https://github.com/NixOS/nixpkgs";
+        ref = "refs/heads/nixos-21.11";
+        rev = "e6377ff35544226392b49fa2cf05590f9f0c4b43";
       })
       { };
   };
